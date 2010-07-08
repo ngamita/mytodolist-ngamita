@@ -14,24 +14,32 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+import os
+import wsgiref.handlers
+
+
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
+from google.appengine.ext.webapp import template
 
 
 class MainHandler(webapp.RequestHandler):
     def get(self):
-        self.response.out.write('Hello world!')
+        template_values = {
+        'greetings':"Hello World !"
+            
+        }
+    
+        template_files = os.path.join(os.path.dirname(__file__),'index.html')
+        self.response.out.write(template.render(template_files,template_values))
         
-        greeting =  '''
-        <html>
-        <body>
         
-        <p>Hello World</p>
-        </body>
-        </html>
         
-        '''
-        self.response.out.write(greeting)
+        
+        
+      
+
 
 
 def main():
