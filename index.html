@@ -4,7 +4,22 @@
   </head>
   <body>
     <p>My List of things to do - by Ngamita</p>
-    <p>In the morning {{greetings}}</p>
+    <ol>
+    {% for todo in my_todo%}
+    
+    <li>{{todo.description|escape}}</li>
+    {% endfor  %}
+    </ol>
+
+
+    <form action="" method="post" >
+    <textarea name="my_todo" rows="8" cols="80"></textarea>
+    <p><input type="submit" value="Add Todo"/></p>
+    </form>
+
+
+
+
   </body>
 
 </html>

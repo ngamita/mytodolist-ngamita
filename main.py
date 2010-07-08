@@ -22,17 +22,38 @@ import wsgiref.handlers
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from google.appengine.ext.webapp import template
+from google.appengine.ext import db
+
+
+class MyTodoModel(db.Model):
+    description = db.StringProperty()
+    created = db.DateTimeProperty(auto_now_add = True) 
+
+
 
 
 class MainHandler(webapp.RequestHandler):
     def get(self):
+        
+        #my_todo = MyTodoModel.all().order('-created').fetch(4)
+        my_todo = db.GqlQuery("SELECT * FROM MyTodoModel ORDER BY created DESC LIMIT 4")
         template_values = {
-        'greetings':"Hello World !"
-            
+            'my_todo': my_todo
+        
         }
+        
+    
     
         template_files = os.path.join(os.path.dirname(__file__),'index.html')
         self.response.out.write(template.render(template_files,template_values))
+        
+        
+    def post(self):
+        todo = MyTodoModel()
+        todo.description = self.request.get("my_todo")       
+        todo.put()
+        self.redirect('/')
+        
         
         
         
