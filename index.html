@@ -1,9 +1,26 @@
 <html>
   <head>
-    <title>Mytodolist-ngamita</title>
+    <title>Mytodolist-{{user.nickname}}</title>
   </head>
   <body>
-    <p>My List of things to do - by Ngamita</p>
+    <div style="width: 100%;">
+		<div class="topLine">
+
+			<div style="float: right;"><a href="{{ url }}">{{ url_linktext }}</a> {{user.nickname}}</div>
+		</div>
+	</div>
+{% if user %}
+{% if num_my_todo %}
+ 
+You have a total number of {{num_my_todo}} MyTodos.
+
+{% else %}
+You have no Todo's Yet , Please Enter MyTodos for the Day! 
+ 
+{% endif %}
+
+
+    <p>My List of things to do - by {{user.nickname}}</p>
     <ol>
     {% for todo in my_todo%}
     
@@ -11,12 +28,13 @@
     {% endfor  %}
     </ol>
 
-
     <form action="" method="post" >
     <textarea name="my_todo" rows="8" cols="80"></textarea>
     <p><input type="submit" value="Add Todo"/></p>
     </form>
-
+{% else %}
+Login with your Google Account to create and review your List of things to !.
+{% endif%}
 
 
 
